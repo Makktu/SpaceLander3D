@@ -1,0 +1,60 @@
+[gd_scene load_steps=11 format=3 uid="uid://dgkan6q5b1amm"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_5cdpy"]
+[ext_resource type="Texture2D" uid="uid://d2ncyi1gk6ylw" path="res://textures/MetalPlates004_1K-JPG/MetalPlates004.png" id="2_dybf0"]
+[ext_resource type="AudioStream" uid="uid://olge1oqatucu" path="res://assets/sfx/thruster1.ogg" id="3_5xv3q"]
+[ext_resource type="AudioStream" uid="uid://db5fi4qd5ier4" path="res://assets/sfx/wind/Wind.ogg" id="4_xnmvk"]
+[ext_resource type="AudioStream" uid="uid://c657usb0iy3hv" path="res://assets/sfx/wind/Wind2.ogg" id="5_rj0da"]
+[ext_resource type="AudioStream" uid="uid://cqylm8ga14031" path="res://assets/sfx/wind/Wind3.ogg" id="6_01xvp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rju87"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4bl8b"]
+cull_mode = 1
+shading_mode = 2
+albedo_texture = ExtResource("2_dybf0")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4nk5n"]
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_2o6rp"]
+radius = 0.2
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_5cdpy")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460795, -3.61593)
+mesh = SubResource("CapsuleMesh_rju87")
+surface_material_override/0 = SubResource("StandardMaterial3D_4bl8b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.460795, -3.61593)
+shape = SubResource("CapsuleShape3D_4nk5n")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.969931, 0.243378, 0, -0.243378, 0.969931, 0, 2, 0)
+
+[node name="Exhaust" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.539205, -1.54478)
+visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Exhaust"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.493824, -2.0408)
+mesh = SubResource("TubeTrailMesh_2o6rp")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Exhaust"]
+stream = ExtResource("3_5xv3q")
+
+[node name="wind_effect" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_xnmvk")
+
+[node name="wind_effect2" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_rj0da")
+
+[node name="wind_effect3" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_01xvp")
+
+[connection signal="finished" from="Exhaust/AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]
+[connection signal="finished" from="wind_effect" to="." method="_on_wind_effect_finished"]
+[connection signal="finished" from="wind_effect2" to="." method="_on_wind_effect_2_finished"]
+[connection signal="finished" from="wind_effect3" to="." method="_on_wind_effect_3_finished"]
