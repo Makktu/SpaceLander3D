@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dgkan6q5b1amm"]
+[gd_scene load_steps=12 format=3 uid="uid://dgkan6q5b1amm"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_5cdpy"]
 [ext_resource type="Texture2D" uid="uid://d2ncyi1gk6ylw" path="res://textures/MetalPlates004_1K-JPG/MetalPlates004.png" id="2_dybf0"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://db5fi4qd5ier4" path="res://assets/sfx/wind/Wind.ogg" id="4_xnmvk"]
 [ext_resource type="AudioStream" uid="uid://c657usb0iy3hv" path="res://assets/sfx/wind/Wind2.ogg" id="5_rj0da"]
 [ext_resource type="AudioStream" uid="uid://cqylm8ga14031" path="res://assets/sfx/wind/Wind3.ogg" id="6_01xvp"]
+[ext_resource type="AudioStream" uid="uid://c5m40qs0ptcok" path="res://assets/music/Timewind.ogg" id="7_g30q6"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_rju87"]
 
@@ -53,6 +54,10 @@ stream = ExtResource("5_rj0da")
 
 [node name="wind_effect3" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("6_01xvp")
+
+[node name="temp_music" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("7_g30q6")
+volume_db = -5.087
 
 [connection signal="finished" from="Exhaust/AudioStreamPlayer3D" to="." method="_on_audio_stream_player_3d_finished"]
 [connection signal="finished" from="wind_effect" to="." method="_on_wind_effect_finished"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://ks86rp0ut8ni"]
+[gd_scene load_steps=19 format=3 uid="uid://ks86rp0ut8ni"]
 
 [ext_resource type="PackedScene" uid="uid://dgkan6q5b1amm" path="res://player.tscn" id="1_avwlx"]
+[ext_resource type="Texture2D" uid="uid://4ufhu3huq2p7" path="res://textures/skybox/panorama_image(1).png" id="1_qa3fq"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="2_sfq12"]
 [ext_resource type="Resource" path="res://TerrainData/data.hterrain" id="3_nb3oa"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="4_8mbkm"]
@@ -10,16 +11,22 @@
 [ext_resource type="Texture2D" uid="uid://d3t0srximutho" path="res://main_slot1_normal_roughness.png" id="8_fmn66"]
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="9_l173h"]
 [ext_resource type="Texture2D" uid="uid://6jmdwj3vn6m0" path="res://addons/zylann.hterrain/tools/icons/icon_detail_layer_node.svg" id="10_15c4n"]
+[ext_resource type="Texture2D" uid="uid://dracfjdtuxe0u" path="res://assets/Hughie.png" id="12_cc7lw"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_08p53"]
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_nkkc0"]
+panorama = ExtResource("1_qa3fq")
 
-[sub_resource type="Sky" id="Sky_qqt28"]
-sky_material = SubResource("ProceduralSkyMaterial_08p53")
+[sub_resource type="Sky" id="Sky_bgfue"]
+sky_material = SubResource("PanoramaSkyMaterial_nkkc0")
 
 [sub_resource type="Environment" id="Environment_7cd4i"]
 background_mode = 2
-sky = SubResource("Sky_qqt28")
+sky = SubResource("Sky_bgfue")
+ambient_light_source = 2
+ambient_light_color = Color(0, 0.458824, 0, 1)
 tonemap_mode = 2
+fog_light_color = Color(0.156863, 0.647059, 0.407843, 1)
+fog_density = 0.0259
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.1036
 
@@ -36,15 +43,15 @@ textures = [[ExtResource("5_qxecw"), ExtResource("6_sfyxp")], [ExtResource("6_4u
 
 [node name="Main" type="Node"]
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_7cd4i")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 light_color = Color(0.819608, 0.337255, 0.192157, 1)
 light_indirect_energy = 2.767
 light_volumetric_fog_energy = 1.465
 shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_7cd4i")
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_12c75")
@@ -55,11 +62,12 @@ mesh = SubResource("PlaneMesh_12c75")
 shape = SubResource("ConcavePolygonShape3D_egx3n")
 
 [node name="Player" parent="." instance=ExtResource("1_avwlx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 770.712, 548.783, 148.761)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 79.7958, 548.783, 148.761)
 
 [node name="Terrain" type="Node3D" parent="."]
 
 [node name="HTerrain" type="Node3D" parent="Terrain"]
+transform = Transform3D(2, 0, 0, 0, 3, 0, 0, 0, 5, -121, 0, -513)
 script = ExtResource("2_sfq12")
 map_scale = Vector3(0.5, 0.5, 0.5)
 centered = true
@@ -121,7 +129,7 @@ shader_params/u_roughness = 0.9
 metadata/_editor_icon = ExtResource("10_15c4n")
 
 [node name="HTerrain3" type="Node3D" parent="Terrain"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 256)
+transform = Transform3D(-2.18557e-07, 0, 2, 0, 2, 0, -5, 0, -8.74228e-08, -126, 0, 763)
 script = ExtResource("2_sfq12")
 map_scale = Vector3(0.5, 0.5, 0.5)
 centered = true
@@ -429,3 +437,7 @@ shader_params/u_bottom_ao = null
 shader_params/u_instance_scale = Vector3(1, 1, 1)
 shader_params/u_roughness = 0.9
 metadata/_editor_icon = ExtResource("10_15c4n")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -91.3848, 46.3812, -370.094)
+texture = ExtResource("12_cc7lw")
